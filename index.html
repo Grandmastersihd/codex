@@ -61,7 +61,16 @@
     <!-- Example Program Section With Copy Button -->
     <div class="code-section">
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-      <div class="code-title">Program 1: Hello World (Python)</div>
+      <div class="code-title">Program 1: Hello World # Install and load the tidyverse package if you haven't already
+# install.packages("tidyverse")
+library(tidyverse)
+# ---- Getting Input from the User ----
+# Prompt the user to enter the path to the CSV file
+file_path <- readline(prompt = "Please enter the path to your CSV file: ")
+  # Check if the file exists
+if (!file.exists(file_path)) {
+stop("Error: The specified file does not exist.")
+}(Python)</div>
       <pre>
 print("# Install and load the tidyverse package if you haven't already
 # install.packages("tidyverse")
@@ -166,4 +175,5 @@ void bubbleSort(int arr[], int n) {
   </script>
 </body>
 </html>
+
 
