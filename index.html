@@ -63,7 +63,61 @@
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
       <div class="code-title">Program 1: Hello World (Python)</div>
       <pre>
-print("Hello, World!")
+print("# Install and load the tidyverse package if you haven't already
+# install.packages("tidyverse")
+library(tidyverse)
+# ---- Getting Input from the User ----
+# Prompt the user to enter the path to the CSV file
+file_path <- readline(prompt = "Please enter the path to your CSV file: ")
+  # Check if the file exists
+if (!file.exists(file_path)) {
+stop("Error: The specified file does not exist.")
+}
+# Read the data from the CSV file
+data <- read_csv(file_path)
+print("Data successfully loaded!")
+
+# ---- Performing Data Wrangling Operations ----
+# 1. Clean the data: Remove any rows with missing values
+clean_data <- drop_na(data)
+print("Missing values have been removed.")
+
+# 2. Mutate: Create a new column (e.g., 'price_category') based on a condition
+# Let's assume the data has a 'price' column.
+# If not, this step will be skipped or need to be modified.
+if ("price" %in% colnames(clean_data)) {
+wrangled_data <- clean_data %>%
+mutate(price_category = if_else(price > 100, "High", "Low"))
+print("A new 'price_category' column has been added.")
+} else {
+wrangled_data <- clean_data
+print("The 'price' column was not found, skipping 'price_category' creation.")
+}
+  # 3. Select: Choose only a few key columns for further analysis
+# Let's assume 'price_category' and two other columns exist.
+# Modify the column names below to match your dataset.
+# The code below is a flexible example.
+selected_columns <- wrangled_data %>%
+select(any_of(c("price_category", "product_name", "category", "price")))
+
+# 4. Filter: Keep only the high-priced items
+# This step also assumes the 'price_category' column was created.
+if ("price_category" %in% colnames(selected_columns)) {
+filtered_data <- selected_columns %>%
+filter(price_category == "High")
+print("Data has been filtered to show only high-priced items.")
+} else {
+filtered_data <- selected_columns
+print("No 'price_category' column to filter on, showing all data.")
+}
+  # 5. Summarize: Get the average price of the high-priced items
+if ("price" %in% colnames(filtered_data)) {
+summary_stats <- filtered_data %>%
+summarize(average_high_price = mean(price, na.rm = TRUE))
+print("Summary statistics calculated.")
+} else {
+summary_stats <- tibble() # Create an empty tibble to avoid errors
+  print("No 'price' column to summarize.") }")
       </pre>
     </div>
 
@@ -112,3 +166,4 @@ void bubbleSort(int arr[], int n) {
   </script>
 </body>
 </html>
+
